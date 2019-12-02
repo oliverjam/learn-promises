@@ -1,0 +1,22 @@
+{
+  "name": "learn-promises",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "nodemon workshop/workshop.test.js | tap-spec",
+    "test-solution": "nodemon solution/solution.test.js | tap-spec",
+    "lint": "eslint ."
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "eslint": "^6.7.2",
+    "nock": "^11.7.0",
+    "nodemon": "^2.0.1",
+    "tap-spec": "^5.0.0",
+    "tape": "^4.11.0",
+    "tape-promise": "^4.0.0"
+  }
+}
