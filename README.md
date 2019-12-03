@@ -103,18 +103,29 @@ myPromise.then(someData => console.log(someData));
 
 Promises are objects with a `.then()` method. This method takes a callback function as an argument. The promise will call this function with the fulfilled value when it's ready.
 
-#### Handling errors
-
-We can also handle errors by passing a callback to the promise's `.catch()` method.
+It's worth noting that you don't need to keep the promise itself around as a variable.
 
 ```javascript
-const myPromise = getSomeAsyncData();
-myPromise
-  .then(someData => console.log(someData))
-  .catch(error => console.log(error));
+getSomeAsyncData().then(someData => console.log(someData));
 ```
 
-It's worth noting that you don't need to keep the promise itself around as a variable.
+#### Chaining `.then`
+
+The `.then()` method also returns a promise, which will resolve to whatever value you return from the function you pass in. This allows you to chain your `.then`s and avoid nested callback hell.
+
+If your first `.then()` returns a promise the next one won't run until the first fulfills.
+
+```js
+getPokemon("pikachu");
+  // we need to make another call to get extra data
+  .then(pokemon => getAbilities(pokemon.abilities.url))
+  // this won't run until the first is finished
+  .then(abilities => console.log(abilities))
+```
+
+#### Handling errors
+
+We can also handle errors by passing a function to the promise's `.catch()` method.
 
 ```javascript
 getSomeAsyncData()
