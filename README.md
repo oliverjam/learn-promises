@@ -177,13 +177,24 @@ You can run `npm test` to start the test runner. It will be failing at first—y
 
 In the same file use your new promisified `request` to fetch a user from the GitHub API.
 
-1. Write a function to fetch a profile from `"https://api.github.com/users/{insertNameHere}"
-1. Fetch the user's repos as well
-1. Log a single user object containing profile info _and_ an array of repos
+1. Write a `getUser` function that takes a username argument
+1. It should fetch that user's profile from `"https://api.github.com/users/{username}"
+1. It should be callable like this:
+   ```js
+   getUser("oliverjam")
+     .then(console.log)
+     .catch(console.error);
+   ```
 
-### Bonus if you have time: Task 3
+### Task 3
 
-1. Fetch multiple GitHub profiles _simultaneously_ using your function above
+1. Write a `getRepos` function that takes a user object argument
+1. Fetch the user's repos after you've fetched the user
+1. Log the array of repos
+
+### Bonus if you have time: Task 4
+
+1. Fetch multiple GitHub profiles _simultaneously_ using your `getUser` function above (you'll have to call it more than once)
 
 <details>
 <summary>Click for a hint</summary>
