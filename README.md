@@ -126,8 +126,6 @@ getSomeAsyncData()
 
 You can create your own promises using `new Promise()`. You have to pass this a promise-creator function that tells it how to fulfill or reject.
 
-This promise-creator function will be passed two functions, commonly named `resolve` and `reject`. Calling `resolve(value)` will cause the promise to fulfill with that value. Calling `reject(value)` will cause the promise to reject with that value.
-
 Here's an example that creates a nicer promise-based version of `setTimeout`:
 
 ```js
@@ -140,7 +138,12 @@ function wait(ms) {
 
 wait(1000).then(console.log);
 // after one second: "Your wait is over"
+
+wait().then(console.log);
+// after one second: "Please enter a time to wait"
 ```
+
+Your promise-creator function will be passed two arguments, commonly named `resolve` and `reject`. These are functions that you should call with the value you want the promise to fulfill/reject with.
 
 ## Workshop
 
