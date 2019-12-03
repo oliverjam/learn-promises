@@ -3,16 +3,16 @@
 Promises are a relatively new JS feature that help us manage async code. They let us go from callback-hell:
 
 ```js
-function getStuff((err, stuff) => {
+getStuff((err, stuff) => {
   if (err) handleError(err);
   getOtherStuff((err, otherStuff) => {
     if (err) handleError(err);
     getMoreStuff((err, moreStuff) => {
       if (err) handleError(err);
       console.log(stuff, otherStuff, moreStuff);
-    })
-  })
-})
+    });
+  });
+});
 ```
 
 to the promise-land:
