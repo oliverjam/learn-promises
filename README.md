@@ -175,4 +175,19 @@ You can run `npm test` to start the test runner. It will be failing at first—y
 
 ### Task 2
 
-In the same file use your new promisified `request` to
+In the same file use your new promisified `request` to fetch a user from the GitHub API.
+
+1. Write a function to fetch a profile from `"https://api.github.com/users/{insertNameHere}"
+1. Fetch the user's repos as well
+1. Log a single user object containing profile info _and_ an array of repos
+
+### Bonus if you have time: Task 3
+
+1. Fetch multiple GitHub profiles _simultaneously_ using your function above
+
+<details>
+<summary>Click for a hint</summary>
+
+You might want to read the docs for [`Promise.all`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/all)
+
+</details>
