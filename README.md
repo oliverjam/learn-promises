@@ -141,3 +141,13 @@ function wait(ms) {
 wait(1000).then(console.log);
 // after one second: "Your wait is over"
 ```
+
+## Workshop
+
+We're going to refactor the callback-based HTTP request function from Node Week 2 to return a promise instead.
+
+### Set-up
+
+1. Clone this repo
+1. Run `npm install`
+1. Open `workshop/workshop.js` in your editor
