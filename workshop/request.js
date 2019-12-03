@@ -1,9 +1,11 @@
-const http = require("http");
+const https = require("http");
 
-function request(url) {
-  return new Promise((resolve, reject) => {
-    http
-      .get(url, response => {
+function request(url, cb) {
+  https
+    .get(
+      url,
+      { headers: { "User-Agent": "GitHub requires this" } },
+      response => {
         let data = "";
         response.on("data", chunk => {
           data += chunk;
@@ -11,15 +13,15 @@ function request(url) {
         response.on("end", () => {
           const statusCode = response.statusCode;
           if (statusCode >= 400) {
-            reject(new Error(statusCode));
+            cb(new Error(statusCode));
             return; // stop executing after error
           }
           const body = JSON.parse(data);
-          resolve({ statusCode, body });
+          cb(null, body);
         });
-      })
-      .on("error", err => reject(err));
-  });
+      }
+    )
+    .on("error", err => cb(err));
 }
 
 module.exports = request;

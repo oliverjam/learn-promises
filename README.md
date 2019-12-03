@@ -169,21 +169,21 @@ Your promise-creator function will be passed two arguments, commonly named `reso
 
 We're going to refactor the callback-based HTTP request function from Node Week 2 to return a promise instead.
 
-Open `workshop/workshop.js` in your editor. Edit the `request` function so that it no longer takes the `cb` argument. It should instead return a promise that resolves with the fetched JSON data or rejects with an error.
+Open `workshop/request.js` in your editor. Edit the `request` function so that it no longer takes the `cb` argument. It should instead return a promise that resolves with the fetched JSON data or rejects with an error.
 
 You can run `npm test` to start the test runner. It will be failing at first—your job is to make it pass.
 
 ### Task 2
 
-In the same file use your new promisified `request` to fetch a user from the GitHub API.
+Open `workshop/github.js` in your editor. Use your new promisified `request` to fetch a user from the GitHub API.
 
 1. Write a `getUser` function that takes a username argument
-1. It should fetch that user's profile from `"https://api.github.com/users/{username}"
+1. It should fetch that user's profile from `"https://api.github.com/users/{username}"`
 1. It should be callable like this:
    ```js
    getUser("oliverjam")
-     .then(console.log)
-     .catch(console.error);
+     .then(user => console.log(user))
+     .catch(error => console.log(error));
    ```
 
 ### Task 3
@@ -196,9 +196,4 @@ In the same file use your new promisified `request` to fetch a user from the Git
 
 1. Fetch multiple GitHub profiles _simultaneously_ using your `getUser` function above (you'll have to call it more than once)
 
-<details>
-<summary>Click for a hint</summary>
-
 You might want to read the docs for [`Promise.all`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/all)
-
-</details>

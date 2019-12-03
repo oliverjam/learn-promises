@@ -1,6 +1,6 @@
 const test = require("tape");
 const nock = require("nock");
-const request = require("./workshop");
+const request = require("./request");
 
 test("request fetches data correctly", t => {
   nock("http://jsonplaceholder.typicode.com")
@@ -9,13 +9,8 @@ test("request fetches data correctly", t => {
       name: "Leanne Graham",
     });
   request("http://jsonplaceholder.typicode.com/users/1").then(response => {
-    t.equal(
-      response.statusCode,
-      200,
-      "the API should respond with a status code of 200"
-    );
     t.deepEqual(
-      response.body.name,
+      response.name,
       "Leanne Graham",
       "the response body should contain the correct json"
     );
