@@ -59,6 +59,12 @@ console.log(3);
 
 This is because `setTimeout` always gets pushed to the back of the queue—the specified wait time just tells JS the _minimum time_ that has to pass before that code is allowed to run.
 
+## Callbacks
+
+We can use callbacks (functions passed as arguments to other functions) to access async values or run our code once some async task completes. In fact the first argument to `setTimeout` above is a callback. We pass a function which `setTimeout` runs once it the timeout has finished.
+
+Callbacks can be fiddly to deal with, and you may end up with very nested function calls if you have to chain lots of async stuff. Promises can help us manage this.
+
 ## Promises
 
 Promises allow us to represent the _eventual completion_ of async code. For example when we fetch some data from a server we will receive a _promise_ that will eventually represent the server's response (when the request completes).
@@ -77,24 +83,27 @@ There's a bit more complexity to this, so it's worth reading this [explanation o
 const myPromise = getSomeAsyncData();
 console.log(myPromise);
 // Promise { <state>: "pending" }
-// or (if the promise has fulfilled)
+// or
 // Promise { <state>: "fulfilled", <value>: theResult }
-// or (if the promise rejected)
+// or
 // Promise { <state>: "rejected", <value>: Error }
 // Note: different browsers may show promises differently in the console
 ```
 
-### Accessing the value
+### Using promises
+
+#### Accessing the value
 
 Since the promise's fulfilled value isn't accessible syncronously, we can't use it immediately like a normal JS variable. We need a way to tell JS to run our code once the promise has fulfilled.
 
 ```javascript
 const myPromise = getSomeAsyncData();
 myPromise.then(someData => console.log(someData));
-// { "blah": "some data" }
 ```
 
 Promises are objects with a `.then()` method. This method takes a callback function as an argument. The promise will call this function with the fulfilled value when it's ready.
+
+#### Handling errors
 
 We can also handle errors by passing a callback to the promise's `.catch()` method.
 
@@ -103,7 +112,6 @@ const myPromise = getSomeAsyncData();
 myPromise
   .then(someData => console.log(someData))
   .catch(error => console.log(error));
-// HttpError: 404 blah
 ```
 
 It's worth noting that you don't need to keep the promise itself around as a variable.
@@ -114,81 +122,22 @@ getSomeAsyncData()
   .catch(error => console.log(error));
 ```
 
-## The `fetch` API
+### Creating promises
 
-[Fetch](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API) is a built in function for making HTTP requests from the browser. Since requests are inherently async `fetch` always returns a promise.
+You can create your own promises using `new Promise()`. You have to pass this a promise-creator function that tells it how to fulfill or reject.
 
-```javascript
-fetch("https://pokeapi.co/api/v2/pokemon/pikachu/")
-  .then(response => console.log(response))
-  .catch(error => console.log(error));
-```
+This promise-creator function will be passed two functions, commonly named `resolve` and `reject`. Calling `resolve(value)` will cause the promise to fulfill with that value. Calling `reject(value)` with cause the promise to reject with that value.
 
-The promise fulfills with a [`Response`](https://developer.mozilla.org/en-US/docs/Web/API/Response) object. It contains information about the response from the server, and looks something like this:
+Here's an example that creates a nicer promise-based version of `setTimeout`:
 
-```javascript
-{
-  body: ReadableStream,
-  headers: Headers,
-  ok: true,
-  status: 200,
-  statusText: "OK"
+```js
+function wait(ms) {
+  return new Promise((resolve, reject) => {
+    if (!ms) reject("Please enter a time to wait");
+    setTimeout(() => resolve("Your wait is over"), ms);
+  });
 }
-```
 
-### Reading the body
-
-The [response body](https://developer.mozilla.org/en-US/docs/Web/API/Body) is a "readable stream", which means you can't access it directly. You need to call a method on the response object to convert the stream into usable data:
-
-```javascript
-fetch("https://pokeapi.co/api/v2/pokemon/pikachu/")
-  .then(response => {
-    return response.json();
-  })
-  .then(data => console.log(data));
-```
-
-Since this API returns data as JSON we use the `response.json()` method. If the body was HTML we'd use `response.text()`.
-
-Reading a stream is async, so these methods _also_ return promises. We return the promise from our `.then()`, which allows us to chain _another_ `.then()` to read the body data.
-
-### Reading headers
-
-The response headers are a special [`Headers`](https://developer.mozilla.org/en-US/docs/Web/API/Headers) object. To get the value of a header you have to use `.get()`:
-
-```javascript
-fetch("https://pokeapi.co/api/v2/pokemon/pikachu/").then(response => {
-  const contentType = response.headers.get("content-type");
-  console.log(contentType); // "application/json"
-});
-```
-
-### Handling failed requests
-
-The promise returned by `fetch` will only reject if there's an actual error thrown. An unsuccessful HTTP request is not necessarily an error—e.g. if a resource is not found `404` is the correct response. We should handle these scenarios manually by checking the `response.ok` property. This will be `false` if the response had an error status code.
-
-```javascript
-fetch("https://pokeapi.co/api/v2/pokemon/notarealpokemon/")
-  .then(response => {
-    if (!response.ok) throw new Error(response.status);
-    return response.json();
-  })
-  .then(data => console.log(data))
-  .catch(error => console.log(error)); // 404
-```
-
-Now our promise will reject with the error we threw if the request is not successful.
-
-### Non-`GET` requests
-
-The second argument to `fetch` is an [options object](https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/fetch#Parameters). You can use this to set the request method and headers, and send a body:
-
-```javascript
-fetch("https://api.com/user/", {
-  method: "POST",
-  body: JSON.stringify({ name: "Oli" }), // encode our data as JSON
-  headers: {
-    "content-type": "application/json", // tell the API we're sending JSON
-  },
-}).then(response => console.log(response));
+wait(1000).then(console.log);
+// after one second: "Your wait is over"
 ```
