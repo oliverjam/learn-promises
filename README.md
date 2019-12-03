@@ -139,8 +139,9 @@ function wait(ms) {
 wait(1000).then(console.log);
 // after one second: "Your wait is over"
 
-wait().then(console.log);
-// after one second: "Please enter a time to wait"
+wait().catch(console.log);
+// straight away*: "Please enter a time to wait"
+// *technically at the back of the queue as promises are always async
 ```
 
 Your promise-creator function will be passed two arguments, commonly named `resolve` and `reject`. These are functions that you should call with the value you want the promise to fulfill/reject with.
@@ -160,3 +161,7 @@ We're going to refactor the callback-based HTTP request function from Node Week 
 Open `workshop/workshop.js` in your editor. Edit the `request` function so that it no longer takes the `cb` argument. It should instead return a promise that resolves with the fetched JSON data or rejects with an error.
 
 You can run `npm test` to start the test runner. It will be failing at first—your job is to make it pass.
+
+### Task 2
+
+In the same file use your new promisified `request` to
