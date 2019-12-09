@@ -178,7 +178,7 @@ You can run `npm test` to start the test runner. It will be failing at first—y
 Open `workshop/github.js` in your editor. Use your new promisified `request` to fetch a user from the GitHub API.
 
 1. Write a `getUser` function that takes a username argument
-1. It should fetch that user's profile from `"https://api.github.com/users/{username}"`
+1. It should fetch that user's profile from `"https://api.github.com/users/{{USERNAME_HERE}}"`
 1. It should be callable like this:
    ```js
    getUser("oliverjam")
