@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "nodemon workshop/workshop.test.js | tap-spec",
+    "test": "nodemon workshop/request.test.js | tap-spec",
     "test-solution": "nodemon solution/request.test.js | tap-spec",
     "lint": "eslint ."
   },
