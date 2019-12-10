@@ -171,7 +171,7 @@ We're going to refactor the callback-based HTTP request function [from Node Week
 
 Open `workshop/request.js` in your editor. Edit the `request` function so that it no longer takes the `cb` argument. It should instead return a promise that resolves with the fetched JSON data or rejects with an error.
 
-You can run `npm test` to start the test runner. It will be failing at first—your job is to make it pass.
+You can run `npm test` to start the test runner. It will be failing at first (`TypeError: Cannot read property 'then' of undefined`). Your job is to make it pass.
 
 ### Task 2
 
