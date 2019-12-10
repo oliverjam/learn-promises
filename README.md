@@ -167,7 +167,7 @@ Your promise-creator function will be passed two arguments, commonly named `reso
 
 ### Task 1
 
-We're going to refactor the callback-based HTTP request function from Node Week 2 to return a promise instead.
+We're going to refactor the callback-based HTTP request function [from Node Week 2](https://github.com/foundersandcoders/mc-request-module-workshop) to return a promise instead.
 
 Open `workshop/request.js` in your editor. Edit the `request` function so that it no longer takes the `cb` argument. It should instead return a promise that resolves with the fetched JSON data or rejects with an error.
 
