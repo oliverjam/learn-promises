@@ -188,8 +188,8 @@ Open `workshop/github.js` in your editor. Use your new promisified `request` to 
 
 ### Task 3
 
-1. Write a `getRepos` function that takes a user object argument
-1. Fetch the user's repos after you've fetched the user
+1. Write a `getRepos` function that takes a Github user object as an argument
+1. Fetch the user's repos using the `repos_url` from the user object (_after_ you've fetched the user)
 1. Log the array of repos
 
 ### Bonus if you have time: Task 4
