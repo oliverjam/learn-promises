@@ -37,7 +37,7 @@ console.log(3);
 // logs 1, then 2, then 3
 ```
 
-When something needs to happen out of this order, we call it _asynchronous_. JavaScript handles this using a "queue". Anything asynchronous gets pushed out of the main running order and into the queue. Once JS finishes what it was doing moves on to the first thing in the queue.
+When something needs to happen out of this order, we call it _asynchronous_. JavaScript handles this using a "queue". Anything asynchronous gets pushed out of the main running order and into the queue. Once JS finishes what it was doing it moves on to the first thing in the queue.
 
 ```javascript
 console.log(1);
@@ -61,7 +61,7 @@ This is because `setTimeout` always gets pushed to the back of the queue—the s
 
 ## Callbacks
 
-We can use callbacks (functions passed as arguments to other functions) to access async values or run our code once some async task completes. In fact the first argument to `setTimeout` above is a callback. We pass a function which `setTimeout` runs once it the timeout has finished.
+We can use callbacks (functions passed as arguments to other functions) to access async values or run our code once some async task completes. In fact the first argument to `setTimeout` above is a callback. We pass a function which `setTimeout` runs once the timeout has finished.
 
 Callbacks can be fiddly to deal with, and you may end up with very nested function calls if you have to chain lots of async stuff. Promises can help us manage this.
 
