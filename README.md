@@ -125,7 +125,7 @@ getPokemon("pikachu");
 
 #### Handling errors
 
-We can also handle errors by passing a function to the promise's `.catch()` method.
+We can also handle errors by passing a function to the promise's `.catch()` method. This will be run _instead of_ the `.then()` if the promise rejects.
 
 ```javascript
 getSomeAsyncData()
